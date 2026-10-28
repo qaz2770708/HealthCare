@@ -1,0 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+namespace HealthCare.Models;
+public record LoginRequest([Required, StringLength(40)] string Username, [Required, StringLength(128)] string Password);
+public record PatientRequest([Required, StringLength(50, MinimumLength = 2)] string Name, [Required, RegularExpression("^(男|女|未知)$")] string Gender, DateTime BirthDate, [Required, RegularExpression(@"^[0-9+\- ()]{6,20}$", ErrorMessage = "请输入 6–20 位联系电话")] string Phone, [StringLength(200)] string Address, [StringLength(500)] string Allergies, int Version = 0);
+public record BookingRequest(int PatientId, int DoctorId, DateTime Slot, [StringLength(200)] string Reason);
+public record VersionRequest(int Version);
+public record EncounterRequest([Required, StringLength(2000)] string Complaint, [Required, StringLength(2000)] string Assessment, [Required, StringLength(3000)] string Plan, DateTime? FollowUpDate, int Version);
+public record PaymentRequest([Required, RegularExpression("^(现金|银行卡|微信|支付宝)$")] string Method, int Version);
+public record StaffRequest([Required, RegularExpression("^[a-zA-Z][a-zA-Z0-9_]{2,29}$")] string Username, [Required, StringLength(128, MinimumLength = 12)] string Password, [Required, StringLength(40)] string Name, [Required, RegularExpression("^(Admin|Doctor|Reception)$")] string Role, [Required, StringLength(40)] string Department);
+public record PasswordRequest([Required] string CurrentPassword, [Required, StringLength(128, MinimumLength = 12)] string NewPassword);
